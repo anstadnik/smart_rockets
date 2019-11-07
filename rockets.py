@@ -4,7 +4,6 @@ from random import sample
 
 from rocket import Rocket
 
-
 class Rockets():
     """This is the Rockets class"""
 
@@ -58,9 +57,11 @@ class Rockets():
             score_normal = rocket.score / total_score
             n = int(score_normal * 50000)
             mating_pool.extend([rocket] * n)
+        print(len(mating_pool))
 
         self.population = [Rocket(self.start, mutation_scale=mutation_scale,
-                                  a=sample(mating_pool, 1), b=sample(mating_pool, 1))]
+                                  a=sample(mating_pool, 1)[0], b=sample(mating_pool, 1)[0])
+                           for _ in range(self.amount)]
 
     def draw(self):
         """Draw rectangles"""

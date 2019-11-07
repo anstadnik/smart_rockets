@@ -12,6 +12,9 @@ class Game():
         self.env = Env(args)
         #  TODO: Add paused, adding <06-11-19, astadnik> #
         self.reset_params()
+        self.paused = False
+        self.standart_obs_added = True
+        self.env.add_standart_obstackles()
 
     def set_up_pylint(self):
         """Set up everything that is needed for pylint"""
@@ -19,10 +22,10 @@ class Game():
         self.clock = pg.time.Clock()
         pg.init()
         pg.display.set_caption("Smart Rockets")
-        self.screen = pg.display.set_mode((640, 480))
+        self.screen = pg.display.set_mode((700, 800))
 
     def reset_params(self):
-        self.paused = False
+        self.paused = True
         self.adding = False
         self.standart_obs_added = False
 
@@ -48,9 +51,9 @@ class Game():
                 if event.key == pg.K_q:
                     return True
                 if event.key == pg.K_p:
-                    paused = not paused
-                if event.key == pg.K_s and not standart_obs_added:
-                    standart_obs_added = True
+                    self.paused = not self.paused
+                if event.key == pg.K_s and not self.standart_obs_added:
+                    self.standart_obs_added = True
                     self.env.add_standart_obstackles()
 
                 if event.key == pg.K_r:

@@ -14,7 +14,7 @@ class Rocket():
             self.dna = DNA(grid_scale=grid_scale)
             self.reset_params(start)
         elif mutation_scale is not None and a is not None and b is not None:
-            self.dna = DNA(mutation_scale=mutation_scale, a=a, b=b)
+            self.dna = DNA(mutation_scale=mutation_scale, a=a.dna, b=b.dna)
             self.reset_params(start)
         else:
             raise RuntimeError('You should either provide grid_scale and\
@@ -38,12 +38,14 @@ class Rocket():
             if self.velocity.length() > self.max_speed:
                 self.velocity.scale_to_length(self.max_speed)
             self.location += self.velocity
-            print(self.velocity)
+            w, h = pg.display.get_surface().get_size()
+            if not (0 <= self.location.x <= w and 0 <= self.location.y <= h):
+                self.crushed = True
 
     def calc_score(self, target):
         """Calculate the fitness score"""
         dist = self.location.distance_to(target)
-        self.score = (1 / self.position if self.finished else 10000) * (1 / dist ** 6)
+        self.score = (1 / self.position if self.finished else 10000) * (1 / dist ** 6) * 10e10
         # if self.finished:
         #     dist = 1
         # self.score = (1 / 10000 * self.finished) * (1 / dist ** 6)
@@ -59,6 +61,6 @@ class Rocket():
         else:
             color = pg.color.Color('lightblue')
         angle = pg.Vector2(0, 1).angle_to(self.velocity)
-        triangles = [pg.Vector2(0, 30), pg.Vector2(-10, -10), pg.Vector2(10, -10)]
+        triangles = [pg.Vector2(0, 9), pg.Vector2(-3, -3), pg.Vector2(3, -3)]
         # pg.draw.polygon(pg.display.get_surface(), color, [tr.rotate(angle) for tr in triangles])
         pg.draw.polygon(pg.display.get_surface(), color, [tr.rotate(angle) + self.location for tr in triangles])

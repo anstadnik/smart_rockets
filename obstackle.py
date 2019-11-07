@@ -16,4 +16,4 @@ class Obstackle(pg.Rect):
 
     def draw(self):
         """Draw an obstacle"""
-        pg.draw.rect(pg.display.get_surface(), self.color, super())
+        pg.draw.rect(pg.display.get_surface(), self.color, self)

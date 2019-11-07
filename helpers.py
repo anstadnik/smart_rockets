@@ -6,7 +6,7 @@ import pygame as pg
 
 def parse():
     """Parses inputs"""
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description='Smart rockets')
     parser.add_argument("--iteration_duration", default=500, help="TODO")
     parser.add_argument("--speed", default=1, help="TODO")
     parser.add_argument("--grid_scale", default=10, help="TODO")
@@ -16,8 +16,8 @@ def parse():
 
 def rand_vec2():
     """Get random normalized vector"""
-    return pg.Vector2(random(), random()).normalize()
+    return pg.Vector2(1 - 2 * random(), 1 - 2 * random()).normalize()
 
 def constrain(val, minimum, maximum):
     """Constrain a variable to be bigger than minimum and less then maximum"""
-    return max(min(val, minimum), maximum)
+    return min(max(val, minimum), maximum)
