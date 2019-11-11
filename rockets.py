@@ -1,8 +1,29 @@
 """This module contains Rockets class"""
 
-from random import sample
+from random import sample, random
 
 from rocket import Rocket
+from blue_rocket import BlueRocket
+from red_rocket import RedRocket
+
+# Interface segregation principle
+def get_random_rocket(start):
+    r = random()
+    if r <= 0.33:
+        return BlueRocket(start)
+    elif r <= 0.66:
+        return RedRocket(start)
+    return Rocket(start)
+
+def get_new_random_rocket(start, grid_scale):
+    rocket = get_random_rocket(start)
+    rocket.new(grid_scale)
+    return rocket
+
+def get_crossover_random_rocket(start, mutation_scale, a, b):
+    rocket = get_random_rocket(start)
+    rocket.crossover(mutation_scale, a, b)
+    return rocket
 
 class Rockets():
     """This is the Rockets class"""
@@ -10,7 +31,8 @@ class Rockets():
     def __init__(self, grid_scale, amount, start):
         """Constructor"""
         self.amount = amount
-        self.population = [Rocket(start, grid_scale=grid_scale) for _ in range(amount)]
+        # Liskov substitution principle
+        self.population = [get_new_random_rocket(start, grid_scale) for _ in range(amount)]
         self.start = start
         # self.first
         self.best_result = None
@@ -27,6 +49,9 @@ class Rockets():
     def update(self, obstackles, target):
         """Update rockets"""
         for rocket in self.population:
+            if rocket.finished or rocket.crushed:
+                continue
+
             rocket.update()
 
             if obstackles.contains(rocket):
@@ -59,7 +84,7 @@ class Rockets():
             mating_pool.extend([rocket] * n)
         print(len(mating_pool))
 
-        self.population = [Rocket(self.start, mutation_scale=mutation_scale,
+        self.population = [get_crossover_random_rocket(self.start, mutation_scale=mutation_scale,
                                   a=sample(mating_pool, 1)[0], b=sample(mating_pool, 1)[0])
                            for _ in range(self.amount)]
 

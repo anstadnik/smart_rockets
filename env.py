@@ -1,10 +1,12 @@
 """This module contains Env class"""
 
 import pygame as pg
-from params import Parameters
-from obstackles import Obstackles
-from rockets import Rockets
 from tqdm import tqdm
+
+from obstackles import Obstackles
+from params import Parameters
+from rockets import Rockets
+
 
 class Env():
     """This the environment class"""
@@ -45,7 +47,7 @@ class Env():
 
     def draw(self):
         """Draw everything"""
-        # __import__('ipdb').set_trace()
+        # Dependency inversion principle
         self.rockets.draw()
         self.obstackles.draw()
         pg.draw.circle(pg.display.get_surface(), pg.color.Color('lightcyan4'),

@@ -8,17 +8,17 @@ from dna import DNA
 class Rocket():
     """This is the Rocket class"""
 
-    def __init__(self, start, *, grid_scale=None, mutation_scale=None, a=None, b=None):
+    def __init__(self, start):
         """Constructor"""
-        if grid_scale is not None:
-            self.dna = DNA(grid_scale=grid_scale)
-            self.reset_params(start)
-        elif mutation_scale is not None and a is not None and b is not None:
-            self.dna = DNA(mutation_scale=mutation_scale, a=a.dna, b=b.dna)
-            self.reset_params(start)
-        else:
-            raise RuntimeError('You should either provide grid_scale and\
-                               starting position or parameters for crossover')
+        self.dna = None
+        self.reset_params(start)
+
+    # Interface segregation principle
+    def new(self, grid_scale):
+        self.dna = DNA(grid_scale=grid_scale)
+
+    def crossover(self, mutation_scale, a, b):
+        self.dna = DNA(mutation_scale=mutation_scale, a=a.dna, b=b.dna)
 
     def reset_params(self, start):
         """Reset the parameters"""
