@@ -2,10 +2,11 @@
 
 import pygame as pg
 
+from entity import Entity
 from dna import DNA
 
 
-class Rocket():
+class Rocket(Entity):
     """This is the Rocket class"""
 
     def __init__(self, start):

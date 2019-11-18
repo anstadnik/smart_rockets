@@ -1,10 +1,11 @@
 """This module contains Obstackle class"""
 
 import pygame as pg
+from entity import Entity
 
 # Single responsibility principle
 
-class DrawableRect(pg.Rect):
+class DrawableRect(Entity, pg.Rect):
     """This is the DrawableRect class"""
     def __init__(self, x, y, w, h):
         """Constructor"""

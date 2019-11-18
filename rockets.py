@@ -85,7 +85,7 @@ class Rockets():
         print(len(mating_pool))
 
         self.population = [get_crossover_random_rocket(self.start, mutation_scale=mutation_scale,
-                                  a=sample(mating_pool, 1)[0], b=sample(mating_pool, 1)[0])
+                                                       a=sample(mating_pool, 1)[0], b=sample(mating_pool, 1)[0])
                            for _ in range(self.amount)]
 
     def draw(self):
