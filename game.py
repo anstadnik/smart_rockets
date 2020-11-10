@@ -1,6 +1,7 @@
 """This file contains the main game class"""
 import pygame as pg
 from env import Env
+pg.init()
 
 class Game():
     """This is the main game class"""
@@ -20,9 +21,8 @@ class Game():
         """Set up everything that is needed for pylint"""
         self.fps = 60
         self.clock = pg.time.Clock()
-        pg.init()
         pg.display.set_caption("Smart Rockets")
-        self.screen = pg.display.set_mode((700, 800))
+        self.screen = pg.display.set_mode((700, 700))
 
     def reset_params(self):
         self.paused = True
